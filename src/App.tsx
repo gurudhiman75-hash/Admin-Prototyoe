@@ -1,4 +1,5 @@
 import './App.css';
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import { AdminLayout } from '@/app/layout/AdminLayout';
 import { ThemeProvider } from '@/app/theme/ThemeProvider';
@@ -8,16 +9,12 @@ import { Toaster } from '@/components/ui/sonner';
 import { DashboardPage } from '@/pages/overview/DashboardPage';
 import { QuestionBankPage } from '@/pages/content/QuestionBankPage';
 import { QuestionDetailPage } from '@/pages/content/QuestionDetailPage';
-import { QuestionStudioPage } from '@/pages/content/QuestionStudioPage';
 import { ContentReviewPage } from '@/pages/content/ContentReviewPage';
 import { TaxonomyPage } from '@/pages/content/TaxonomyPage';
 import { DiPassageSetsPage } from '@/pages/content/DiPassageSetsPage';
 import { MediaLibraryPage } from '@/pages/content/MediaLibraryPage';
-import { CoveragePlannerPage } from '@/pages/content/CoveragePlannerPage';
 import { TestsPage } from '@/pages/tests/TestsPage';
 import { TestDetailPage } from '@/pages/tests/TestDetailPage';
-import { TestBuilderPage } from '@/pages/tests/TestBuilderPage';
-import { TestQAWorkspacePage } from '@/pages/tests/TestQAWorkspacePage';
 import { TestSeriesPage } from '@/pages/tests/TestSeriesPage';
 import { ExamBlueprintsPage } from '@/pages/tests/ExamBlueprintsPage';
 import { PublishingCalendarPage } from '@/pages/tests/PublishingCalendarPage';
@@ -33,11 +30,6 @@ import { AdminTeamPage } from '@/pages/users/AdminTeamPage';
 import { SupportRequestsPage } from '@/pages/users/SupportRequestsPage';
 import { SupportDetailPage } from '@/pages/users/SupportDetailPage';
 import { NotificationsPage } from '@/pages/users/NotificationsPage';
-import { BusinessAnalyticsPage } from '@/pages/analytics/BusinessAnalyticsPage';
-import { TestAnalyticsPage } from '@/pages/analytics/TestAnalyticsPage';
-import { QuestionAnalyticsPage } from '@/pages/analytics/QuestionAnalyticsPage';
-import { ContentQualityPage } from '@/pages/analytics/ContentQualityPage';
-import { SystemHealthPage } from '@/pages/analytics/SystemHealthPage';
 import { ExamConfigurationPage } from '@/pages/settings/ExamConfigurationPage';
 import { LanguagesPage } from '@/pages/settings/LanguagesPage';
 import { RolesPermissionsPage } from '@/pages/settings/RolesPermissionsPage';
@@ -45,6 +37,24 @@ import { BrandingPage } from '@/pages/settings/BrandingPage';
 import { AuditLogsPage } from '@/pages/settings/AuditLogsPage';
 import { IntegrationsPage } from '@/pages/settings/IntegrationsPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+
+const QuestionStudioPage = lazy(() => import('@/pages/content/QuestionStudioPage').then((module) => ({ default: module.QuestionStudioPage })));
+const CoveragePlannerPage = lazy(() => import('@/pages/content/CoveragePlannerPage').then((module) => ({ default: module.CoveragePlannerPage })));
+const TestBuilderPage = lazy(() => import('@/pages/tests/TestBuilderPage').then((module) => ({ default: module.TestBuilderPage })));
+const TestQAWorkspacePage = lazy(() => import('@/pages/tests/TestQAWorkspacePage').then((module) => ({ default: module.TestQAWorkspacePage })));
+const BusinessAnalyticsPage = lazy(() => import('@/pages/analytics/BusinessAnalyticsPage').then((module) => ({ default: module.BusinessAnalyticsPage })));
+const TestAnalyticsPage = lazy(() => import('@/pages/analytics/TestAnalyticsPage').then((module) => ({ default: module.TestAnalyticsPage })));
+const QuestionAnalyticsPage = lazy(() => import('@/pages/analytics/QuestionAnalyticsPage').then((module) => ({ default: module.QuestionAnalyticsPage })));
+const ContentQualityPage = lazy(() => import('@/pages/analytics/ContentQualityPage').then((module) => ({ default: module.ContentQualityPage })));
+const SystemHealthPage = lazy(() => import('@/pages/analytics/SystemHealthPage').then((module) => ({ default: module.SystemHealthPage })));
+
+function RouteFallback() {
+  return (
+    <div className="flex min-h-[240px] items-center justify-center text-sm text-muted-foreground">
+      Loading admin workspace…
+    </div>
+  );
+}
 
 const router = createBrowserRouter([
   {
@@ -100,7 +110,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <PrototypeStoreProvider>
-        <RouterProvider router={router} />
+        <Suspense fallback={<RouteFallback />}>
+          <RouterProvider router={router} />
+        </Suspense>
         <Toaster />
       </PrototypeStoreProvider>
     </ThemeProvider>
