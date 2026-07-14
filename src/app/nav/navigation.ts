@@ -17,9 +17,9 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     id: 'content', label: 'Content',
     items: [
-      { label: 'Question Bank', path: '/content/questions', icon: FileQuestion, badge: '23' },
+      { label: 'Question Bank', path: '/content/questions', icon: FileQuestion },
       { label: 'Question Studio', path: '/content/studio', icon: Sparkles },
-      { label: 'Content Review', path: '/content/review', icon: ClipboardCheck, badge: '18' },
+      { label: 'Content Review', path: '/content/review', icon: ClipboardCheck },
       { label: 'Coverage Planner', path: '/content/coverage', icon: Target },
       { label: 'Sections & Topics', path: '/content/taxonomy', icon: Network },
       { label: 'DI & Passage Sets', path: '/content/sets', icon: Layers },
@@ -31,6 +31,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: 'Tests', path: '/tests', icon: FileText },
       { label: 'Test Builder', path: '/tests/builder', icon: ListChecks },
+      { label: 'Test QA', path: '/tests/qa', icon: ClipboardCheck },
       { label: 'Test Series', path: '/tests/series', icon: Box },
       { label: 'Exam Blueprints', path: '/tests/blueprints', icon: CalendarClock },
       { label: 'Publishing Calendar', path: '/tests/calendar', icon: CalendarClock },
@@ -50,7 +51,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: 'Students', path: '/users/students', icon: Users },
       { label: 'Admin Team', path: '/users/team', icon: ShieldCheck },
-      { label: 'Support Requests', path: '/users/support', icon: LifeBuoy, badge: '7' },
+      { label: 'Support Requests', path: '/users/support', icon: LifeBuoy },
       { label: 'Notifications', path: '/users/notifications', icon: Bell },
     ],
   },
